@@ -34,8 +34,27 @@ public class Advent2015_05 {
 			}	
 		return true;
 	}
+	static boolean condicion4(String linea){
+		for(int i=0;i<linea.length()-3;i++) {
+			for(int j=i+2;j<linea.length()-1;j++){
+				if(linea.charAt(i)==linea.charAt(j)&&linea.charAt(i+1)==linea.charAt(j+1))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	static boolean condicion5(String linea) {
+		for(int i=0;i<linea.length()-2;i++) {
+			if(linea.charAt(i)==linea.charAt(i+2)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public static void main(String [] args) {
 		int cc=0;
+		int cc2=0;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("cadenas.txt"));
 			String linea="";	
@@ -44,8 +63,14 @@ public class Advent2015_05 {
 					cc++;
 					System.out.println(linea+"\t"+cc);
 				}
+				if(condicion4(linea)&&condicion5(linea)) {
+					cc2++;
+					System.out.println(linea+"\t"+cc2);
+				}
 			}
+			br.close();
 		}catch(IOException e) {}
-		System.out.println(cc);
+		System.out.println("primera parte: "+cc);
+		System.out.println("segunda parte: "+cc2);
 	}
 }
