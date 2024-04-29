@@ -61,16 +61,14 @@ public class Advent2015_05 {
 			while((linea=br.readLine())!=null) {
 				if(condicion1(linea)&&condicion2(linea)&&condicion3(linea)) {
 					cc++;
-					System.out.println(linea+"\t"+cc);
 				}
 				if(condicion4(linea)&&condicion5(linea)) {
 					cc2++;
-					System.out.println(linea+"\t"+cc2);
 				}
 			}
 			br.close();
 		}catch(IOException e) {}
-		System.out.println("primera parte: "+cc);
-		System.out.println("segunda parte: "+cc2);
+		System.out.println("Primera parte: "+cc);
+		System.out.println("Segunda parte: "+cc2);
 	}
 }
