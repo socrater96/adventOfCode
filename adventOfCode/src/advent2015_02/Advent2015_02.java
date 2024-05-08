@@ -26,7 +26,7 @@ public class Advent2015_02 {
 		}
 		System.out.print("Total cinta: "+total);
 	}
-	public static void main (String []args) {
+	public static void main (String[]args) {
 		String input="3x11x24\r\n"
 				+ "13x5x19\r\n"
 				+ "1x9x27\r\n"
