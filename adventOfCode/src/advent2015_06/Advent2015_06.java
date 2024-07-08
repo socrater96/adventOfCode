@@ -40,7 +40,7 @@ public class Advent2015_06 {
 					cc++;
 			}
 		}
-		System.out.println("Luces encencidads: "+cc);
+		System.out.println("Luces encencidads: "+"\t"+cc);
 	}
 	static void parte2 (String input) {
 		int[][] matriz=new int[1000][1000];
@@ -77,7 +77,7 @@ public class Advent2015_06 {
 					
 			}
 		}
-		System.out.println("Luces encencidads 2: "+cc);
+		System.out.println("Luces encencidads 2: "+"\t"+cc);
 	}
 	public static void main(String[] args) {
 		String input="turn off 660,55 through 986,197\n"
