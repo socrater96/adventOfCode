@@ -1,5 +1,7 @@
 package advent2015_07;
 
+import java.util.ArrayList;
+
 public class Advent2015_07 {
 	static String input(){
 		String input="NOT dq -> dr\n"
@@ -445,9 +447,27 @@ public class Advent2015_07 {
 		}
 		return aDecimal(binR);
 	}
+	 public static boolean isParsableToInt(String str) {
+	        if (str == null || str.isEmpty()) {
+	            return false;
+	        }
+
+	        try {
+	            Integer.parseInt(str);
+	            return true;
+	        } catch (NumberFormatException e) {
+	            return false;
+	        }
+	    }
 	public static void main(String []args) {
 		String input = input();
-		
+		String[] inputArray=input.split("\n");
+		ArrayList<Senhal> senhales= new ArrayList<>();
+		for(String linea: inputArray) {
+			if(isParsableToInt(linea.split(" ")[0])) {
+				
+			}
+		}
 	}
 	
 }
