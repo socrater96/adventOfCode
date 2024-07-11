@@ -356,17 +356,98 @@ public class Advent2015_07 {
 	}
 	static int aDecimal(String binario) {
 		int decimal=0;
-		for(int i=binario.length()-1;i>0;i--) {
-			decimal= (int) ((int) binario.charAt(i)*Math.pow(2, i))+decimal;
+		int posicion=0;
+		for(int i=binario.length()-1;i>=0;i--) {
+			int valorBinario=binario.charAt(i)-'0';
+			decimal += (int) valorBinario*Math.pow(2, posicion);
+			posicion++;
 		}
 		return decimal;
 	}
+	static int opAND(int n1, int n2) {
+		String bin1=aBinario(n1);
+		String bin2=aBinario(n2);
+		String binR="";
+		if(bin1.length()>bin2.length()) {
+			bin2="0".repeat(bin1.length()-bin2.length())+bin2;
+		}
+		if(bin2.length()>bin1.length()) {
+			bin1="0".repeat(bin2.length()-bin1.length())+bin1;
+		}
+		for(int i=0;i<bin1.length();i++) {
+			if(bin1.charAt(i)==0 || bin2.charAt(i)==0) {
+				binR+="0";
+			}
+			else
+				binR+="1";
+		}
+		return aDecimal(binR);
+	}
+	static int opOR(int n1, int n2) {
+		String bin1=aBinario(n1);
+		String bin2=aBinario(n2);
+		String binR="";
+		if(bin1.length()>bin2.length()) {
+			bin2="0".repeat(bin1.length()-bin2.length())+bin2;
+		}
+		if(bin2.length()>bin1.length()) {
+			bin1="0".repeat(bin2.length()-bin1.length())+bin1;
+		}
+		for(int i=0;i<bin1.length();i++) {
+			if(bin1.charAt(i)==1 || bin2.charAt(i)==1) {
+				binR+="1";
+			}
+			else
+				binR+="0";
+		}
+		return aDecimal(binR);
+	}
+	static int opXOR(int n1, int n2) {
+		String bin1=aBinario(n1);
+		String bin2=aBinario(n2);
+		String binR="";
+		if(bin1.length()>bin2.length()) {
+			bin2="0".repeat(bin1.length()-bin2.length())+bin2;
+		}
+		if(bin2.length()>bin1.length()) {
+			bin1="0".repeat(bin2.length()-bin1.length())+bin1;
+		}
+		for(int i=0;i<bin1.length();i++) {
+			if(bin1.charAt(i)!=bin2.charAt(i)) {
+				binR+="1";
+			}
+			else
+				binR+="0";
+		}
+		return aDecimal(binR);
+	}
+	static int opNOT(int n1) {
+		String bin1=aBinario(n1);
+		String binR="";
+		for(int i=0;i<bin1.length();i++) {
+			if(bin1.charAt(i)==0)
+				binR+="1";
+			else
+				binR+="0";
+		}
+		return aDecimal(binR);
+	}
+	static int opLSHIFT(int n1, int n2) {
+		String bin1=aBinario(n1);
+		String binR=bin1+"0".repeat(n2);
+		return aDecimal(binR);
+	}
+	static int opRSHIFT(int n1,int n2) {
+		String bin1=aBinario(n1);
+		String binR="";
+		for(int i=0;i<bin1.length()-1-n2;i++) {
+			binR+=bin1.charAt(i);
+		}
+		return aDecimal(binR);
+	}
 	public static void main(String []args) {
 		String input = input();
-		int decimal=2353443;
-		System.out.println(aDecimal(aBinario(decimal)));
-		String cosa="abc";
-		System.out.println(cosa.charAt(2));
+		
 	}
 	
 }
