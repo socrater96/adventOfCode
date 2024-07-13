@@ -447,7 +447,7 @@ public class Advent2015_07 {
 		}
 		return aDecimal(binR);
 	}
-	 public static boolean isParsableToInt(String str) {
+	public static boolean isParsableToInt(String str) {
 	        if (str == null || str.isEmpty()) {
 	            return false;
 	        }
@@ -459,15 +459,55 @@ public class Advent2015_07 {
 	            return false;
 	        }
 	    }
+	public static boolean tieneValor(ArrayList<Senhal> senhales, String circuito) {
+		for(Senhal senhal: senhales) {
+			if(senhal.getNombre().equals(circuito))
+				return true;
+		}
+		return false;
+	}
+	public static Senhal encontrarSenhal(ArrayList<Senhal> senhales, String nombre) {
+		for(Senhal senhal: senhales) {
+			if(senhal.getNombre().equals(nombre)) 
+				return senhal;	
+		}
+		return null;
+	}
 	public static void main(String []args) {
 		String input = input();
 		String[] inputArray=input.split("\n");
 		ArrayList<Senhal> senhales= new ArrayList<>();
 		for(String linea: inputArray) {
-			if(isParsableToInt(linea.split(" ")[0])) {
-				
+			if(linea.split(" ").length==3&&isParsableToInt(linea.split(" ")[0])) {
+				senhales.add(new Senhal(linea.split(" ")[2],linea.split(" ")[0]));
+			}
+			if(linea.split(" ")[0].equals("1") && tieneValor(senhales,linea.split(" ")[2])) {
+				senhales.add(new Senhal(linea.split(" ")[4], opAND(1,Integer.parseInt(linea.split(" ")[2]))));
+			}
+			if(tieneValor(senhales,linea.split(" ")[0]) && tieneValor(senhales,linea.split(" ")[2])) {
+				Senhal senhal1=encontrarSenhal(senhales, linea.split(" ")[0]);
+				Senhal senhal2=encontrarSenhal(senhales, linea.split(" ")[2]);
+				switch(linea.split(" ")[1]) {
+					case "AND":	
+						senhales.add(new Senhal(linea.split(" ")[4],opAND(senhal1.getValor(),senhal2.getValor())));
+						break;
+					case "OR":
+						senhales.add(new Senhal(linea.split(" ")[4],opOR(senhal1.getValor(),senhal2.getValor())));
+				}
+			}
+			if(linea.split(" ")[0].equals("NOT")&&tieneValor(senhales,linea.split(" ")[1])) {
+				Senhal senhal1=encontrarSenhal(senhales,linea.split(" ")[1]);
+				senhales.add(new Senhal(linea.split(" ")[3],opNOT(senhal1.getValor())));
+			}
+			if(tieneValor(senhales, linea.split(" ")[0])&&linea.split(" ")[1].equals("RSHIT")) {
+				Senhal senhal1=encontrarSenhal(senhales, linea.split(" ")[0]);
+				senhales.add(new Senhal(linea.split(" ")[4],opRSHIFT(senhal1.getValor(),Integer.parseInt(linea.split(" ")[2]))));
 			}
 		}
+		for(Senhal senhal: senhales) {
+			System.out.println(senhal);
+		}
 	}
+	
 	
 }

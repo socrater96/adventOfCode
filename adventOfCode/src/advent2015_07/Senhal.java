@@ -4,9 +4,13 @@ public class Senhal {
 	private String nombre;
 	private int valor;
 	public Senhal() {}
-	public Senhal(String nombre, int valor) {
+	public Senhal(String nombre, String valor) {
 		this.setNombre(nombre);
 		this.setValor(valor);
+	}
+	public Senhal(String nombre, int valor) {
+		this.setNombre(nombre);
+		this.valor=valor;
 	}
 	public String getNombre() {
 		return nombre;
@@ -17,7 +21,10 @@ public class Senhal {
 	public int getValor() {
 		return valor;
 	}
-	public void setValor(int valor) {
-		this.valor = valor;
+	public void setValor(String valor) {
+		this.valor = Integer.parseInt(valor);
+	}
+	public String toString() {
+		return nombre+"\t"+valor;
 	}
 }
