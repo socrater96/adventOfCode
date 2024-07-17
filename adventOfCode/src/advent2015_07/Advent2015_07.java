@@ -1,6 +1,8 @@
 package advent2015_07;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Advent2015_07 {
 	static String input(){
@@ -459,49 +461,51 @@ public class Advent2015_07 {
 	            return false;
 	        }
 	    }
-	public static boolean tieneValor(ArrayList<Senhal> senhales, String circuito) {
-		for(Senhal senhal: senhales) {
-			if(senhal.getNombre().equals(circuito))
-				return true;
-		}
-		return false;
-	}
-	public static Senhal encontrarSenhal(ArrayList<Senhal> senhales, String nombre) {
-		for(Senhal senhal: senhales) {
-			if(senhal.getNombre().equals(nombre)) 
-				return senhal;	
-		}
-		return null;
-	}
+	public static boolean tieneValor(Map<String, Senhal> senhales, String circuito) {
+	        Senhal senhal = senhales.get(circuito);
+	        return senhal != null && senhal.hasValue();
+	    }
+	public static Senhal encontrarSenhal(Map<String, Senhal> senhales, String nombre) {
+        return senhales.get(nombre);
+    }
 	public static void main(String []args) {
 		String input = input();
 		String[] inputArray=input.split("\n");
-		ArrayList<Senhal> senhales= new ArrayList<>();
+		Map<String, Senhal> senhales = new HashMap<>();
 		for(String linea: inputArray) {
-			if(linea.split(" ").length==3&&isParsableToInt(linea.split(" ")[0])) {
-				senhales.add(new Senhal(linea.split(" ")[2],linea.split(" ")[0]));
+			String[] parts = linea.split(" ");
+			if(parts.length==3&&isParsableToInt(parts[0])) {
+				senhales.put(parts[2], new Senhal(parts[2], Integer.parseInt(parts[0])));
 			}
-			if(linea.split(" ")[0].equals("1") && tieneValor(senhales,linea.split(" ")[2])) {
-				senhales.add(new Senhal(linea.split(" ")[4], opAND(1,Integer.parseInt(linea.split(" ")[2]))));
+			else if(parts[0].equals("NOT")&&tieneValor(senhales,parts[1])) {
+				Senhal senhal1 = encontrarSenhal(senhales, parts[1]);
+                Senhal target = encontrarSenhal(senhales, parts[3]);
+                if (!target.hasValue()) {
+                    target.setValor(opNOT(senhal1.getValor()));
+                }
+			
+			if(parts[0].equals("1") && tieneValor(senhales,parts[2])) {
+				senhales.put(parts[2], new Senhal(parts[2], Integer.parseInt(parts[0])));
 			}
-			if(tieneValor(senhales,linea.split(" ")[0]) && tieneValor(senhales,linea.split(" ")[2])) {
-				Senhal senhal1=encontrarSenhal(senhales, linea.split(" ")[0]);
-				Senhal senhal2=encontrarSenhal(senhales, linea.split(" ")[2]);
-				switch(linea.split(" ")[1]) {
+			if(tieneValor(senhales,parts[0])||isParsableToInt(parts[0]) && tieneValor(senhales,parts[2])) {
+				Senhal senhal1=encontrarSenhal(senhales, parts[0]);
+				Senhal senhal2=encontrarSenhal(senhales, parts[2]);
+				switch(parts[1]) {
 					case "AND":	
-						senhales.add(new Senhal(linea.split(" ")[4],opAND(senhal1.getValor(),senhal2.getValor())));
+						senhales.add(new Senhal(parts[4],opAND(senhal1.getValor(),senhal2.getValor())));
 						break;
 					case "OR":
-						senhales.add(new Senhal(linea.split(" ")[4],opOR(senhal1.getValor(),senhal2.getValor())));
+						senhales.add(new Senhal(parts[4],opOR(senhal1.getValor(),senhal2.getValor())));
 				}
 			}
-			if(linea.split(" ")[0].equals("NOT")&&tieneValor(senhales,linea.split(" ")[1])) {
-				Senhal senhal1=encontrarSenhal(senhales,linea.split(" ")[1]);
-				senhales.add(new Senhal(linea.split(" ")[3],opNOT(senhal1.getValor())));
+			
+			if(tieneValor(senhales, parts[0])&&parts[1].equals("RSHIT")) {
+				Senhal senhal1=encontrarSenhal(senhales, parts[0]);
+				senhales.add(new Senhal(parts[4],opRSHIFT(senhal1.getValor(),Integer.parseInt(parts[2]))));
 			}
-			if(tieneValor(senhales, linea.split(" ")[0])&&linea.split(" ")[1].equals("RSHIT")) {
-				Senhal senhal1=encontrarSenhal(senhales, linea.split(" ")[0]);
-				senhales.add(new Senhal(linea.split(" ")[4],opRSHIFT(senhal1.getValor(),Integer.parseInt(linea.split(" ")[2]))));
+			if(tieneValor(senhales, parts[0])&&parts[1].equals("LSHIT")) {
+				Senhal senhal1=encontrarSenhal(senhales, parts[0]);
+				senhales.add(new Senhal(parts[4],opLSHIFT(senhal1.getValor(),Integer.parseInt(parts[2]))));
 			}
 		}
 		for(Senhal senhal: senhales) {

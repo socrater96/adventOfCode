@@ -1,30 +1,36 @@
 package advent2015_07;
 
 public class Senhal {
-	private String nombre;
-	private int valor;
-	public Senhal() {}
-	public Senhal(String nombre, String valor) {
-		this.setNombre(nombre);
-		this.setValor(valor);
-	}
-	public Senhal(String nombre, int valor) {
-		this.setNombre(nombre);
-		this.valor=valor;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public int getValor() {
-		return valor;
-	}
-	public void setValor(String valor) {
-		this.valor = Integer.parseInt(valor);
-	}
-	public String toString() {
-		return nombre+"\t"+valor;
-	}
+    private String nombre;
+    private int valor;
+    private boolean tieneValor;
+
+    public Senhal(String nombre) {
+        this.nombre = nombre;
+        this.tieneValor = false;
+    }
+
+    public Senhal(String nombre, int valor) {
+        this.nombre = nombre;
+        this.valor = valor;
+        this.tieneValor = true;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+        this.tieneValor = true;
+    }
+
+    public boolean hasValue() {
+        return tieneValor;
+    }
+    
 }
