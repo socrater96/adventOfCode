@@ -474,6 +474,36 @@ public class Advent2015_07 {
 		Map<String, Senhal> senhales = new HashMap<>();
 		for(String linea: inputArray) {
 			String[] parts = linea.split(" ");
+			if(parts.length==3) {
+				senhales.put(parts[2], new Senhal(parts[2],Integer.parseInt(parts[0])));
+			}
+			else if(parts[0].equals("NOT")&&senhales.containsKey(parts[1])) {
+				senhales.put(parts[3], new Senhal(parts[3],~Integer.parseInt(parts[1])));
+			}
+			if(senhales.containsKey(parts[0])&&senhales.containsKey(parts[2])||isParsableToInt(parts[2])) {
+				Senhal senhal1 = senhales.get(parts[0]);
+				
+				switch(parts[1]) {
+					case "AND":
+						Senhal senhal2 = senhales.get(parts[2]);
+						senhales.put(parts[4], new Senhal(parts[4],(senhal1.getValor())&senhal2.getValor()));
+						break;
+					case "OR":
+						Senhal senhal3 = senhales.get(parts[2]);
+						senhales.put(parts[4], new Senhal(parts[4],(senhal1.getValor() | senhal3.getValor())));
+						break;
+					case "RSHIFT":
+						senhales.put(parts[4], new Senhal(parts[4],(senhal1.getValor()>>Integer.parseInt(parts[2]))));
+						break;
+					case "LSHIFT":
+						senhales.put(parts[4], new Senhal(parts[4],(senhal1.getValor()<<Integer.parseInt(parts[2]))));
+					
+				}
+				
+			}
+		}
+		System.out.println(senhales.get("a"));
+			/*
 			if(parts.length==3&&isParsableToInt(parts[0])) {
 				senhales.put(parts[2], new Senhal(parts[2], Integer.parseInt(parts[0])));
 			}
@@ -506,11 +536,10 @@ public class Advent2015_07 {
 			if(tieneValor(senhales, parts[0])&&parts[1].equals("LSHIT")) {
 				Senhal senhal1=encontrarSenhal(senhales, parts[0]);
 				senhales.add(new Senhal(parts[4],opLSHIFT(senhal1.getValor(),Integer.parseInt(parts[2]))));
-			}
-		}
-		for(Senhal senhal: senhales) {
-			System.out.println(senhal);
-		}
+			}*/
+		
+			
+	
 	}
 	
 	
